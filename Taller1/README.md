@@ -7,7 +7,6 @@ Este proyecto realiza procesamiento de datos, entrenamiento de un modelo de clas
 - Docker
 - Python 3.9+ 
 
-
 ## Instrucciones para Ejecutar la API
 
 1. **Construir la imagen Docker:**
