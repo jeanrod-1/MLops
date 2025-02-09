@@ -5,7 +5,8 @@ Este proyecto realiza procesamiento de datos, entrenamiento de un modelo de clas
 
 ## Requisitos
 - Docker
-- Python 3.9+
+- Python 3.9+ 
+
 
 ## Instrucciones para Ejecutar la API
 
