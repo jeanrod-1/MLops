@@ -17,7 +17,7 @@ Este proyecto realiza procesamiento de datos, entrenamiento de un modelo de clas
 2. **Ejecutar el contenedor:**
 
     ```bash
-   docker run -p 8989:8989 mlo_api
+   docker run -p 8989:8989 --name mlo_api_container mlo_api
 
 3. **Probar la API:**
 
