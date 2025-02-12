@@ -31,4 +31,7 @@ Este proyecto realiza procesamiento de datos, entrenamiento de un modelo de clas
            "culmen_depth_mm": 18.7,
            "body_mass_g": 3750
          }'
-    
+3. **Ejecutar Docker Compose**
+
+    ```bash
+   docker-compose up --build    
