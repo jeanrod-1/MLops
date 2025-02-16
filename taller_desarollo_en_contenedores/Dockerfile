@@ -3,18 +3,19 @@ FROM python:3.9-slim
 WORKDIR /app
 COPY . /app
 
-
-# RUN pip install uv 
-# RUN uv venv
+# Con UV
+RUN pip install uv 
+RUN uv venv
 # RUN uv init fastapi-ml-project 
 # RUN cd fastapi-ml-project
 # RUN uv python install 3.9
 # RUN uv python pin 3.9
-# RUN uv pip install -r requirements.txt
-# RUN uv pip install jupyter==1.0.0 -U && uv pip install jupyterlab==3.6.1
+RUN uv pip install -r requirements.txt
+RUN uv pip install jupyter==1.0.0 -U && uv pip install jupyterlab==3.6.1
 
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install jupyter==1.0.0 -U && pip install jupyterlab==3.6.1
+# Con pip
+# RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install jupyter==1.0.0 -U && pip install jupyterlab==3.6.1
 
 
 EXPOSE 8989

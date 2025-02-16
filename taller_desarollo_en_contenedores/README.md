@@ -7,12 +7,12 @@
 
 2. **Ir al Jupyter Lab Local con el token generado en los logs y entrenar y guardar los modelos necesarios:**
 
-3. **Opcinal, reiniciar el servicio si no se encuentra el archivo del modelo:**
+3. **Listar los modelos disponibles:**
 
    ```bash
-      docker compose restart api
+   curl -X GET "http://localhost:8000/list_models"
 
-4. **Probar la API:**
+4. **Probar la API específicando el modelo a usar:**
 
     ```bash
-   curl "http://localhost:8000/predict?sepal_length=5.1&sepal_width=3.5&petal_length=1.4&petal_width=0.2"
+   curl -X GET "http://localhost:8000/predict?sepal_length=5.1&sepal_width=3.5&petal_length=1.4&petal_width=0.2&model_name=svm_model.joblib"
