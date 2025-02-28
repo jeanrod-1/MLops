@@ -4,7 +4,7 @@ services:     # Define los servicios que se ejecutarán en contenedores Docker.
   jupyterlab: # Nombre del servicio
     build: .
     # image: python:3.9
-    container_name: jupyterlab
+    container_name: jupyterlab_2
     volumes:
       - ./models:/app/models
       - ./notebooks:/app/notebooks  # Volumen compartido para los modelos
