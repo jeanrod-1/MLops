@@ -1,6 +1,6 @@
 ## Instrucciones para Ejecutar
 
-1. **Reconstrucción de imágenes y instanciamiento de contenedores:**
+1. **Reconstrucción de imágenes e instanciamiento de contenedores:**
 
    ```bash
    docker-compose up --build
