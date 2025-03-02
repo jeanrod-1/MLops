@@ -4,3 +4,5 @@ scikit-learn
 uvicorn
 joblib
 ucimlrepo
+# tfx==1.16.0
+# apache-beam==2.45.0

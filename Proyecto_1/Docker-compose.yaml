@@ -1,14 +1,14 @@
-version: '3'  # Especifica la versión de Docker Compose que se está utilizando.
+version: '3'
 
-services:     # Define los servicios que se ejecutarán en contenedores Docker.
-  jupyterlab: # Nombre del servicio
+services:
+  jupyterlab:
     build: .
-    # image: python:3.9
-    container_name: jupyterlab_2
+    container_name: jupyterlab_tfx
     volumes:
-      - ./models:/app/models
-      - ./notebooks:/app/notebooks  # Volumen compartido para los modelos
+      - .:/app
     ports:
       - "8888:8888"
-    command: >
-      sh -c "uv run jupyter lab --ip=0.0.0.0 --port=8888 --allow-root"
+      - "6006:6006"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
