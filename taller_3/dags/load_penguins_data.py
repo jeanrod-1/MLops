@@ -1,8 +1,14 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+import os
+import shutil
 
 def load_penguins():
+    cache_dir = "/home/airflow/.cache/seaborn"
+    if os.path.exists(cache_dir):
+        shutil.rmtree(cache_dir)  # Borra el caché antes de importar seaborn
+
     import seaborn as sns
     import pandas as pd
     from sqlalchemy import create_engine

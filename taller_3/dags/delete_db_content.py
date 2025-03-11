@@ -17,7 +17,8 @@ with DAG(
         task_id='truncate_penguins_tables',
         mysql_conn_id='mysql_default', ##Cambiar por el id
         sql=[
-            "TRUNCATE TABLE IF EXISTS penguins_raw;",
-            "TRUNCATE TABLE IF EXISTS penguins_preprocessed;"
+            "DROP TABLE IF EXISTS penguins_raw;",
+            "DROP TABLE IF EXISTS penguins_preprocessed;"
         ]
+
     )
