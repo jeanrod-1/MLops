@@ -6,6 +6,13 @@ __pycache__/
 .ipynb_checkpoints/
 
 pipeline/
+logs/
+python
+
+models/
+!models/.gitkeep
+models/*.joblib
+
 
 
 # 🚀 Archivos de modelo y artefactos generados
