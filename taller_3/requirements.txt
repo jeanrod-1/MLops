@@ -4,3 +4,6 @@ scikit-learn
 fastapi
 uvicorn
 joblib
+sqlalchemy
+seaborn
+pymysql
