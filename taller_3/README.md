@@ -43,8 +43,5 @@
 7. **Probar la API específicando el modelo a usar:**
 
     ```bash
-   curl -X 'GET' 'http://localhost:8000/predict' \
-   -H 'accept: application/json' \
-   -H 'Content-Type: application/json' \
-   'http://localhost:8000/predict?bill_length_mm=45.0&bill_depth_mmn_depth_mm=17.5&body_mass_g=4500'
+   curl -X 'GET' 'http://localhost:8000/predict?bill_length_mm=45.0&bill_depth_mm=17.5&body_mass_g=4500'
 
