@@ -6,6 +6,7 @@ __pycache__/
 .ipynb_checkpoints/
 
 pipeline/
+logs/
 
 
 # 🚀 Archivos de modelo y artefactos generados
