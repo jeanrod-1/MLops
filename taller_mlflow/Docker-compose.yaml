@@ -41,8 +41,18 @@ services:
     command: mlflow server --backend-store-uri postgresql://mlflow:mlflow_pass@db.mlflow.com/mlflow_db --default-artifact-root s3://mlflow/ --host 0.0.0.0
 
   jupyter:
-  build: .
-
+    build:
+      context: .
+      dockerfile: Dockerfile_jupyter
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile_api
+    container_name: airflow_api
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "uvicorn api:app --host 0.0.0.0 --port 8000 --reload"
 
 
 volumes:
