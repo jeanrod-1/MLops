@@ -43,11 +43,11 @@ services:
   jupyter:
     build:
       context: .
-      dockerfile: Dockerfile_jupyter
+      dockerfile: dockerfile_jupyter
   api:
     build:
       context: .
-      dockerfile: Dockerfile_api
+      dockerfile: dockerfile_api
     container_name: airflow_api
     ports:
       - "8000:8000"
