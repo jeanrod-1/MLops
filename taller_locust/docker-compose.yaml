@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  inference_api:
+    image: fastapi-inference-workshop:latest # reemplazar
+    container_name: fastapi_inference_standalone
+    ports:
+      - "8000:8000"
+    restart: unless-stopped 
+    environment:
+      - PYTHONUNBUFFERED=1

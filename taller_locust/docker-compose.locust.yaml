@@ -1,0 +1,31 @@
+# docker-compose.locust.yaml
+version: '3.8'
+
+services:
+  fastapi_app:
+    build: ./app
+    container_name: fastapi_app_for_locust
+    expose:
+      - "8000"
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    deploy:
+      resources:
+        limits:
+        # Valores a iterar
+          cpus: '0.25' 
+          memory: '128M' 
+
+  locust:
+    image: locustio/locust
+    container_name: locust_tester
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./locust:/mnt/locust
+    working_dir: /mnt/locust
+    command: -f locustfile.py --host http://fastapi_app:8000
+    depends_on:
+      - fastapi_app
+    restart: unless-stopped
