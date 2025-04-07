@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   inference_api:
-    image: fastapi-inference-workshop:latest # reemplazar
+    image: jeanrod1/api-inference:latest
     container_name: fastapi_inference_standalone
     ports:
       - "8000:8000"

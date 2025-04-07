@@ -14,9 +14,10 @@ class APIUser(HttpUser):
         """
         
         payload = {
-            "feature1": round(random.uniform(0.0, 10.0), 2),
-            "feature2": round(random.uniform(0.0, 5.0), 2),
-            "feature3": round(random.uniform(0.0, 2.0), 2)
+            "sepal_length": round(random.uniform(0.0, 10.0), 2),
+            "sepal_width": round(random.uniform(0.0, 5.0), 2),
+            "petal_length": round(random.uniform(0.0, 2.0), 2),
+            "petal_width": round(random.uniform(0.0, 2.0), 2)
         }
 
         headers = {'Content-Type': 'application/json'}
