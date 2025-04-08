@@ -66,5 +66,6 @@ docker-compose -f docker-compose.locust.yaml up
 
 
 ### Conclusiones
--Si bien puede resultar contraintuitivo, la incorporación de recursos adicionales a través de réplicas resulta fundamental para asegurar el adecuado desempeño del sistema.
--Incluso duplicando los recursos mínimos requeridos en ausencia de réplicas, la configuración con 3 réplicas continúa siendo insuficiente para satisfacer la demanda.
+- Si bien puede resultar contraintuitivo, la incorporación de recursos adicionales a través de réplicas resulta fundamental para asegurar el adecuado desempeño del sistema.
+
+- Incluso duplicando los recursos mínimos requeridos en ausencia de réplicas, la configuración con 3 réplicas continúa siendo insuficiente para satisfacer la demanda.
