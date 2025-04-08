@@ -5,13 +5,12 @@ import os
 
 app = FastAPI()
 
-MODEL_DIR = "models"
+MODEL_DIR = "/models"
 
-class IrisData(BaseModel):
-    sepal_length: float
-    sepal_width: float
-    petal_length: float
-    petal_width: float
+class PenguinData(BaseModel):
+    bill_length_mm: float
+    bill_depth_mm: float
+    body_mass_g: float
     model_name: str = "rf_model.joblib"
 
 def load_model(model_name: str):
@@ -21,13 +20,13 @@ def load_model(model_name: str):
     return None
 
 @app.get("/predict")
-def predict(sepal_length: float, sepal_width: float, petal_length: float, petal_width: float, model_name: str = "rf_model.joblib"):
+def predict(bill_length_mm: float, bill_depth_mm: float, body_mass_g: float, model_name: str = "rf_model.joblib"):
     model = load_model(model_name)
     if model is None:
         raise HTTPException(status_code=404, detail=f"Model '{model_name}' not found.")
     
-    prediction = model.predict([[sepal_length, sepal_width, petal_length, petal_width]])
-    return {"model": model_name, "prediction": int(prediction[0])}
+    prediction = model.predict([[bill_length_mm, bill_depth_mm, body_mass_g]])
+    return {"model": model_name, "prediction": prediction[0]}
 
 @app.get("/list_models")
 def list_models():

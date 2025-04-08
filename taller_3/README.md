@@ -6,19 +6,24 @@
    mkdir -p ./dags ./logs ./plugins
    echo -e "AIRFLOW_UID=$(id -u)" > .env
 
-2. **Reconstrucción de imágenes y instanciamiento de contenedores:**
+2. **Crear directorio para guardar los modelos:**
+
+   ```bash
+   mkdir -p ./models
+
+3. **Reconstrucción de imágenes y instanciamiento de contenedores:**
 
    ```bash
    docker compose up airflow-init
    docker-compose up --build
 
 
-3. **Iniciar sesión en Docker hub para configurar credenciales (opcional, si sale error: getting credentials - err: exit status 1, out: `):**
+4. **Iniciar sesión en Docker hub para configurar credenciales (opcional, si sale error: getting credentials - err: exit status 1, out: `):**
    ```bash
    rm ~/.docker/config.json
    echo "<PASSWORD>" | docker login -u <USER> --password-stdin
 
-4. **Agregar la conexión de MySQL a Airflow:**
+5. **Agregar la conexión de MySQL a Airflow:**
 
    ```bash
    docker exec -it taller_3-airflow-webserver-1 airflow connections add 'mysql_default' \
@@ -29,13 +34,14 @@
     --conn-password 'airflow_pass' \
     --conn-port '3306'
 
-5. **Ir a Airflow y ejecutar los DAG (http://localhost:8080):**
+6. **Ir a Airflow y ejecutar los DAG (http://localhost:8080):**
 
    ```bash
    usuario: airflow
    contraseña: airflow
 
-6. **Probar la API específicando el modelo a usar:**
+7. **Probar la API específicando el modelo a usar:**
 
     ```bash
-   curl -X GET "http://localhost:8000/predict?sepal_length=5.1&sepal_width=3.5&petal_length=1.4&petal_width=0.2&model_name=rf_model.joblib"
+   curl -X 'GET' 'http://localhost:8000/predict?bill_length_mm=45.0&bill_depth_mm=17.5&body_mass_g=4500'
+

@@ -1,0 +1,42 @@
+# docker-compose.locust.yaml
+version: '3.8'
+
+networks:
+  inferencenet:
+    driver: bridge
+
+
+services:
+  fastapi_app:
+    image: jeanrod1/api-inference:latest
+    # container_name: fastapi_app_for_locust
+    expose:
+      - "8000"
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - inferencenet
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+        # Valores a iterar
+          cpus: '2' 
+          memory: '1000M'
+
+
+  locust:
+    image: locustio/locust
+    container_name: locust_tester
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./locust:/mnt/locust
+    working_dir: /mnt/locust
+    command: -f locustfile.py --host http://fastapi_app:8000
+    depends_on:
+      - fastapi_app
+    networks:
+      - inferencenet
+    restart: unless-stopped

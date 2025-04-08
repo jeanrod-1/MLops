@@ -78,6 +78,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
+    - ./models:/models  # Volumen compartido para los modelos
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -300,8 +301,8 @@ services:
       context: .
       dockerfile: Dockerfile_api
     container_name: airflow_api
-    #volumes:
-     # - ./models:/app/models
+    volumes:
+     - ./models:/models
       #- ./dags:/app/dags  # Volumen compartido para los modelos
     ports:
       - "8000:8000"
