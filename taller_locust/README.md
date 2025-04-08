@@ -65,6 +65,6 @@ docker-compose -f docker-compose.locust.yaml up
 | 3        | 2.0              | 1000M                | ✅ Funciona bien     | ![OK](images/replicas_3_cpus_2_memory_1000M.jpeg)                      |
 
 
-### Conclusones
-Parece un poco raro, pero hay que agregar más recursos usando replicas para que todo funcione bien.
-Aún duplicando los recursos mínimos necesarios cuando no había replicas, con 3 replicas no da lo suficiente.
+### Conclusiones
+-Si bien puede resultar contraintuitivo, la incorporación de recursos adicionales a través de réplicas resulta fundamental para asegurar el adecuado desempeño del sistema.
+-Incluso duplicando los recursos mínimos requeridos en ausencia de réplicas, la configuración con 3 réplicas continúa siendo insuficiente para satisfacer la demanda.
