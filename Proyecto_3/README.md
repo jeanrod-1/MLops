@@ -15,6 +15,19 @@ sudo docker push myuser/fastapi:latest
 sudo docker push myuser/streamlit:latest
 
 
+# Configurar kubectl
+sudo usermod -a -G microk8s estudiante
+newgrp microk8s
+
+# Revisar los espacios
+microk8s kubectl get all --all-namespaces
+
+# Crear los namespaces
+kubectl create namespace mlops
+
+
+
+
 Despliegue en Kubernetes:
 # 1. Namespace + secretos
 kubectl apply -f k8s/00-namespace.yaml
