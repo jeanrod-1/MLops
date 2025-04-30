@@ -11,5 +11,5 @@ POSTGRES = {
 RAW_SCHEMA = "raw"
 CLEAN_SCHEMA = "clean"
 
-MLFLOW_TRACKING_URI = os.getenv("MLFLOW_URI", "http://localhost:5000")
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_URI", "http://mlflow:5000")
 S3_BUCKET = os.getenv("S3_BUCKET", "mlflow")
