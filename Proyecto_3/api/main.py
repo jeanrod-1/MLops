@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
-from utils.mlflow_registry import load_production_model
+from src.utils.mlflow_registry import load_production_model
 
 app = FastAPI(title="Diabetes API")
 

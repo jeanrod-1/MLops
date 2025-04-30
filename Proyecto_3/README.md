@@ -35,23 +35,32 @@ sudo microk8s enable hostpath-storage
 Despliegue en Kubernetes:
 # 1. Namespace + secretos
 <!-- kubectl apply -f k8s/00-namespace.yaml -->
-microk8s kubectl apply -f k8s/secrets.yaml
+sudo microk8s kubectl apply -f k8s/secrets.yaml
 
 
 # 2. Backing services
-microk8s kubectl apply -f k8s/postgres.yaml && \
-microk8s kubectl apply -f k8s/minio.yaml && \
-microk8s kubectl apply -f k8s/mlflow.yaml &&
+sudo microk8s kubectl apply -f k8s/postgres.yaml && \
+sudo microk8s kubectl apply -f k8s/minio.yaml && \
+sudo microk8s kubectl apply -f k8s/mlflow.yaml &&
 <!-- microk8s kubectl apply -f k8s/airflow.yaml -->
 
 
+
+
+
+
+
+
+
+
+
 # 3. Inferencia + UI
-kubectl apply -f k8s/06-fastapi.yaml
-kubectl apply -f k8s/07-streamlit.yaml
+sudo microk8s kubectl apply -f k8s/fastapi.yaml
+sudo microk8s kubectl apply -f k8s/streamlit.yaml
 
 # 4. Observabilidad
-kubectl apply -f k8s/08-prometheus.yaml
-kubectl apply -f k8s/09-grafana.yaml
+sudo microk8s kubectl apply -f k8s/prometheus.yaml
+sudo microk8s kubectl apply -f k8s/grafana.yaml
 
 
 Pruebas de carga: kubectl apply -f k8s/10-locust.yaml    logs: kubectl -n mlops logs job/locust
