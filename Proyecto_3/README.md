@@ -3,16 +3,16 @@
 Construir imagenes en Kubernetes: 
 # Suponiendo tu usuario de Docker Hub = myuser
 <!-- sudo docker build -t myuser/airflow:latest   ./airflow -->
-sudo docker build -t myuser/fastapi:latest   ./api
-sudo docker build -t myuser/streamlit:latest ./ui
+sudo docker build -t jeanrod1/fastapi:latest ./api
+sudo docker build -t jeanrod1/streamlit:latest ./ui
 
 # Iniciar sesión en docker hub
 sudo docker login
 
 # Sube las imágenes
 <!-- sudo docker push myuser/airflow:latest -->
-sudo docker push myuser/fastapi:latest
-sudo docker push myuser/streamlit:latest
+sudo docker push jeanrod1/fastapi:latest
+sudo docker push jeanrod1/streamlit:latest
 
 
 # Configurar kubectl
