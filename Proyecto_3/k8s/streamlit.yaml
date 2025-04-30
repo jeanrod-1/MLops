@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamlit
+  namespace: mlops
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: streamlit } }
+  template:
+    metadata: { labels: { app: streamlit } }
+    spec:
+      containers:
+        - name: streamlit
+          image: your-dockerhub/streamlit:latest
+          env:
+            - { name: API_URL, value: "http://fastapi.mlops.svc.cluster.local" }
+          ports: [{ containerPort: 8501 }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: streamlit
+  namespace: mlops
+spec:
+  selector: { app: streamlit }
+  ports: [{ port: 80, targetPort: 8501 }]
+  type: ClusterIP

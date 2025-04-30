@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow
+  namespace: mlops
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: airflow } }
+  template:
+    metadata: { labels: { app: airflow } }
+    spec:
+      containers:
+        - name: airflow
+          image: your-dockerhub/airflow:latest   
+          envFrom: [{ secretRef: { name: mlops-secrets } }]
+          env:
+            - name: AIRFLOW__CORE__LOAD_EXAMPLES
+              value: "false"
+          volumeMounts:
+            - { name: dags,  mountPath: /opt/airflow/dags }
+          command: ["/bin/bash","-c"]
+          args:
+            - |
+              airflow db upgrade && \
+              airflow users create \
+                  --username admin --firstname admin --lastname admin \
+                  --role Admin --email admin@xyz.com --password admin && \
+              airflow scheduler &
+              exec airflow webserver --port 8080
+      volumes:
+        - name: dags
+          emptyDir: {}   # Para subir manualmente; en producción usar ConfigMap o volumen git-sync
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airflow
+  namespace: mlops
+spec:
+  selector: { app: airflow }
+  ports: [{ port: 8080, targetPort: 8080 }]
+  type: ClusterIP
