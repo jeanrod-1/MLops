@@ -1,0 +1,8 @@
+# Dependencias típicas para scripts de ML
+pandas
+scikit-learn
+numpy
+joblib
+
+# Otras posibles dependencias usadas en tus scripts Python
+pyyaml
