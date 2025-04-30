@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: streamlit
-          image: your-dockerhub/streamlit:latest
+          image: jeanrod1/streamlit:latest
           env:
             - { name: API_URL, value: "http://fastapi.mlops.svc.cluster.local" }
           ports: [{ containerPort: 8501 }]

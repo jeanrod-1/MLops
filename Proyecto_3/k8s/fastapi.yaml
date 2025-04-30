@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: fastapi
-          image: your-dockerhub/fastapi:latest
+          image: jeanrod1/fastapi:latest
           envFrom: 
             - secretRef: { name: mlops-secrets }
           ports: [ { containerPort: 8000 } ]

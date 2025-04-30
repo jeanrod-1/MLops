@@ -1,19 +1,18 @@
 ## CAMBIAR!!
 
-
-Ejecucion local: docker compose up --build
-
-
 Construir imagenes en Kubernetes: 
 # Suponiendo tu usuario de Docker Hub = myuser
-docker build -t myuser/airflow:latest   ./airflow
-docker build -t myuser/fastapi:latest   ./api
-docker build -t myuser/streamlit:latest ./ui
+sudo docker build -t myuser/airflow:latest   ./airflow
+sudo docker build -t myuser/fastapi:latest   ./api
+sudo docker build -t myuser/streamlit:latest ./ui
+
+# Iniciar sesión en docker hub
+sudo docker login
 
 # Sube las imágenes
-docker push myuser/airflow:latest
-docker push myuser/fastapi:latest
-docker push myuser/streamlit:latest
+sudo docker push myuser/airflow:latest
+sudo docker push myuser/fastapi:latest
+sudo docker push myuser/streamlit:latest
 
 
 Despliegue en Kubernetes:

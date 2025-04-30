@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: airflow
-          image: your-dockerhub/airflow:latest   
+          image: jeanrod1/airflow:latest   
           envFrom: [{ secretRef: { name: mlops-secrets } }]
           env:
             - name: AIRFLOW__CORE__LOAD_EXAMPLES
