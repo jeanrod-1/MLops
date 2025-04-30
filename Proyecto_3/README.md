@@ -2,7 +2,7 @@
 
 Construir imagenes en Kubernetes: 
 # Suponiendo tu usuario de Docker Hub = myuser
-sudo docker build -t myuser/airflow:latest   ./airflow
+<!-- sudo docker build -t myuser/airflow:latest   ./airflow -->
 sudo docker build -t myuser/fastapi:latest   ./api
 sudo docker build -t myuser/streamlit:latest ./ui
 
@@ -10,7 +10,7 @@ sudo docker build -t myuser/streamlit:latest ./ui
 sudo docker login
 
 # Sube las imágenes
-sudo docker push myuser/airflow:latest
+<!-- sudo docker push myuser/airflow:latest -->
 sudo docker push myuser/fastapi:latest
 sudo docker push myuser/streamlit:latest
 
@@ -25,6 +25,11 @@ microk8s kubectl get all --all-namespaces
 # Crear los namespaces
 microk8s kubectl create namespace mlops
 
+# Desplejar airflow
+sudo docker-compose -f docker-compose.airflow.yaml up --build
+
+sudo microk8s enable hostpath-storage
+
 
 
 Despliegue en Kubernetes:
@@ -36,8 +41,8 @@ microk8s kubectl apply -f k8s/secrets.yaml
 # 2. Backing services
 microk8s kubectl apply -f k8s/postgres.yaml && \
 microk8s kubectl apply -f k8s/minio.yaml && \
-microk8s kubectl apply -f k8s/mlflow.yaml && \
-microk8s kubectl apply -f k8s/airflow.yaml
+microk8s kubectl apply -f k8s/mlflow.yaml &&
+<!-- microk8s kubectl apply -f k8s/airflow.yaml -->
 
 
 # 3. Inferencia + UI

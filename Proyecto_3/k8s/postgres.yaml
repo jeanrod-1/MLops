@@ -4,8 +4,12 @@ metadata:
   name: postgres-data
   namespace: mlops
 spec:
+  storageClassName: microk8s-hostpath
   accessModes: [ReadWriteOnce]
-  resources: { requests: { storage: 5Gi } }
+  resources:
+    requests:
+      storage: 5Gi
+
 
 ---
 apiVersion: apps/v1

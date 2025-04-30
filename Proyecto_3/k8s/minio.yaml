@@ -4,8 +4,11 @@ metadata:
   name: minio-data
   namespace: mlops
 spec:
+  storageClassName: microk8s-hostpath
   accessModes: [ReadWriteOnce]
-  resources: { requests: { storage: 10Gi } }
+  resources:
+    requests:
+      storage: 10Gi
 
 ---
 apiVersion: apps/v1
