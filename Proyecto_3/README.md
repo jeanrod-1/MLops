@@ -23,21 +23,22 @@ newgrp microk8s
 microk8s kubectl get all --all-namespaces
 
 # Crear los namespaces
-kubectl create namespace mlops
-
+microk8s kubectl create namespace mlops
 
 
 
 Despliegue en Kubernetes:
 # 1. Namespace + secretos
-kubectl apply -f k8s/00-namespace.yaml
-kubectl apply -f k8s/01-secrets.yaml
+<!-- kubectl apply -f k8s/00-namespace.yaml -->
+microk8s kubectl apply -f k8s/secrets.yaml
+
 
 # 2. Backing services
-kubectl apply -f k8s/02-postgres.yaml
-kubectl apply -f k8s/03-minio.yaml
-kubectl apply -f k8s/04-mlflow.yaml
-kubectl apply -f k8s/05-airflow.yaml
+microk8s kubectl apply -f k8s/postgres.yaml && \
+microk8s kubectl apply -f k8s/minio.yaml && \
+microk8s kubectl apply -f k8s/mlflow.yaml && \
+microk8s kubectl apply -f k8s/airflow.yaml
+
 
 # 3. Inferencia + UI
 kubectl apply -f k8s/06-fastapi.yaml
