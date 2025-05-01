@@ -257,5 +257,7 @@ services:
 
 volumes:
   postgres-db-volume:
+  # - "./airflow/dags:/opt/airflow/dags"
+  # - "./src:/opt/airflow/src"
 
   

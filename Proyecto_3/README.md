@@ -26,9 +26,12 @@ microk8s kubectl get all --all-namespaces
 microk8s kubectl create namespace mlops
 
 # Desplejar airflow
+mkdir -p ./dags ./logs ./plugins
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+mkdir -p ./models
+
+sudo docker-compose -f docker-compose.airflow.yaml up airflow-init 
 sudo docker-compose -f docker-compose.airflow.yaml up --build
-docker compose up airflow-init
-docker-compose up --build
 
 
 
