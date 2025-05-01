@@ -2,9 +2,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 from utils.mlflow_registry import load_production_model
 
 app = FastAPI(title="Diabetes API")
