@@ -3,7 +3,7 @@
 Construir imagenes en Kubernetes: 
 # Suponiendo tu usuario de Docker Hub = myuser
 <!-- sudo docker build -t myuser/airflow:latest   ./airflow -->
-sudo docker build -t jeanrod1/fastapi:latest ./api
+sudo docker build -t jeanrod1/fastapi:latest -f api/Dockerfile .
 sudo docker build -t jeanrod1/streamlit:latest ./ui
 
 # Iniciar sesión en docker hub
@@ -27,9 +27,13 @@ microk8s kubectl create namespace mlops
 
 # Desplejar airflow
 sudo docker-compose -f docker-compose.airflow.yaml up --build
+docker compose up airflow-init
+docker-compose up --build
+
+
+
 
 sudo microk8s enable hostpath-storage
-
 
 
 Despliegue en Kubernetes:
@@ -43,15 +47,6 @@ sudo microk8s kubectl apply -f k8s/postgres.yaml && \
 sudo microk8s kubectl apply -f k8s/minio.yaml && \
 sudo microk8s kubectl apply -f k8s/mlflow.yaml &&
 <!-- microk8s kubectl apply -f k8s/airflow.yaml -->
-
-
-
-
-
-
-
-
-
 
 
 # 3. Inferencia + UI
