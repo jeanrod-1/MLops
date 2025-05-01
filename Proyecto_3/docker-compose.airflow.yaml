@@ -219,6 +219,8 @@ services:
     user: "0:0"
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
+      - ./logs:/opt/airflow/logs
+      - "./src:/opt/airflow/src"
 
   airflow-cli:
     <<: *airflow-common
