@@ -4,8 +4,8 @@ POSTGRES = {
     "user": os.getenv("POSTGRES_USER", "mlops"),
     "password": os.getenv("POSTGRES_PASSWORD", "mlops"),
     "db": os.getenv("POSTGRES_DB", "diabetes"),
-    "host": os.getenv("POSTGRES_HOST", "postgres"),
-    "port": 5432,
+    "host": os.getenv("POSTGRES_HOST", "10.43.101.194"),  # Ip del host, local: 172.30.173.0
+    "port": 30007, 
 }
 
 RAW_SCHEMA = "raw"

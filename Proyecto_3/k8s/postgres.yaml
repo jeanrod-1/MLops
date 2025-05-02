@@ -43,5 +43,8 @@ metadata:
   namespace: mlops
 spec:
   selector: { app: postgres }
-  ports: [{ port: 5432, targetPort: 5432 }]
-  type: ClusterIP
+  type: NodePort
+  ports:
+    - port: 5432
+      targetPort: 5432
+      nodePort: 30007  # puedes elegir cualquier puerto libre en el rango 30000–32767
