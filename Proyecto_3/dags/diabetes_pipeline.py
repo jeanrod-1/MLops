@@ -12,22 +12,22 @@ with DAG("diabetes_pipeline",
 
     ingest = BashOperator(
         task_id="ingest_raw",
-        bash_command="python /opt/airflow/src/data/ingest_raw.py"
+        bash_command="PYTHONPATH=/opt/airflow/src python /opt/airflow/src/data/ingest_raw.py"
     )
 
     preprocess = BashOperator(
         task_id="preprocess",
-        bash_command="python /opt/airflow/src/data/preprocess.py"
+        bash_command="PYTHONPATH=/opt/airflow/src python /opt/airflow/src/data/preprocess.py"
     )
 
     train = BashOperator(
         task_id="train",
-        bash_command="python /opt/airflow/src/modeling/train.py"
+        bash_command="PYTHONPATH=/opt/airflow/src python /opt/airflow/src/modeling/train.py"
     )
 
     select_best = BashOperator(
         task_id="evaluate_register",
-        bash_command="python /opt/airflow/src/modeling/evaluate_register.py"
+        bash_command="PYTHONPATH=/opt/airflow/src python /opt/airflow/src/modeling/evaluate_register.py"
     )
 
     ingest >> preprocess >> train >> select_best
