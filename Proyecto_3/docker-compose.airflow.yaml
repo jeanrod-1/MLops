@@ -37,6 +37,9 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - ./models:/models  # Volumen compartido para los modelos
+    - ./logs:/opt/airflow/logs
+    - ./src:/opt/airflow/src
+    - ./dags:/opt/airflow/dags
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -220,7 +223,8 @@ services:
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
       - ./logs:/opt/airflow/logs
-      - "./src:/opt/airflow/src"
+      - ./src:/opt/airflow/src
+      - ./dags:/opt/airflow/dags
 
   airflow-cli:
     <<: *airflow-common
@@ -260,6 +264,5 @@ services:
 volumes:
   postgres-db-volume:
   # - "./airflow/dags:/opt/airflow/dags"
-  # - "./src:/opt/airflow/src"
-
+  # - "./src:/opt/airflow/from airflow import DAG
   
