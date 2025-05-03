@@ -33,8 +33,13 @@ mkdir -p ./models
 sudo docker-compose -f docker-compose.airflow.yaml up airflow-init 
 sudo docker-compose -f docker-compose.airflow.yaml up --build
 
-
-
+sudo docker-compose exec airflow-webserver airflow connections add postgres_mlops \
+    --conn-type postgres \
+    --conn-host 10.43.101.194 \
+    --conn-port 30007 \
+    --conn-login mlops \
+    --conn-password mlops \
+    --conn-schema diabetes
 
 sudo microk8s enable hostpath-storage
 
