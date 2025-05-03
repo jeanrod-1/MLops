@@ -13,14 +13,29 @@ def _get_engine():
 
 def transform(df: pd.DataFrame):
     y = (df[TARGET] == "<30").astype(int)
+
+    # Eliminar columnas que contienen "diag" en el nombre
+    df = df.drop(columns=[col for col in df.columns if "diag" in col])
+
+    # Eliminar columnas que no se deben usar como features
     X = df.drop(columns=[TARGET, "encounter_id", "patient_nbr"])
+
+    # Identificar columnas categóricas
     cat_cols = X.select_dtypes("object").columns
+
+    # One-Hot Encoding
     ohe = OneHotEncoder(handle_unknown="ignore", sparse=False)
     X_ohe = ohe.fit_transform(X[cat_cols])
+
+    # Crear DataFrame final combinando OHE + numéricas
     X_final = pd.concat(
-        [pd.DataFrame(X_ohe, columns=ohe.get_feature_names_out(cat_cols)), X.drop(columns=cat_cols).reset_index(drop=True)],
-        axis=1)
+        [pd.DataFrame(X_ohe, columns=ohe.get_feature_names_out(cat_cols)), 
+         X.drop(columns=cat_cols).reset_index(drop=True)],
+        axis=1
+    )
+
     return X_final, y, ohe
+
 
 def main():
     engine = _get_engine()

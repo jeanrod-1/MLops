@@ -50,20 +50,11 @@ Despliegue en Kubernetes:
 # 1. Namespace + secretos
 <!-- kubectl apply -f k8s/00-namespace.yaml -->
 sudo microk8s kubectl apply -f k8s/secrets.yaml
-
-
-# 2. Backing services
 sudo microk8s kubectl apply -f k8s/postgres.yaml && \
 sudo microk8s kubectl apply -f k8s/minio.yaml && \
 sudo microk8s kubectl apply -f k8s/mlflow.yaml &&
-<!-- microk8s kubectl apply -f k8s/airflow.yaml -->
-
-
-# 3. Inferencia + UI
 sudo microk8s kubectl apply -f k8s/fastapi.yaml
 sudo microk8s kubectl apply -f k8s/streamlit.yaml
-
-# 4. Observabilidad
 sudo microk8s kubectl apply -f k8s/prometheus.yaml
 sudo microk8s kubectl apply -f k8s/grafana.yaml
 
