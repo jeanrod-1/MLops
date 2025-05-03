@@ -4,7 +4,7 @@ POSTGRES = {
     "user": "mlops",
     "password": "mlops",
     "db": "diabetes",
-    "host":"127.0.0.1",  # Ip del host, local: 172.30.173.0
+    "host":"10.43.101.194",  # Ip del host, local: 172.30.173.0
     "port": 5432, 
 }
 
