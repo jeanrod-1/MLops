@@ -29,7 +29,7 @@ def transform(df: pd.DataFrame):
 
     # Crear DataFrame final combinando OHE + numéricas
     X_final = pd.concat(
-        [pd.DataFrame(X_ohe, columns=ohe.get_feature_names_out(cat_cols)), 
+        [pd.DataFrame(X_ohe, columns=ohe.get_feature_names_out(cat_cols)).reset_index(drop=True),
          X.drop(columns=cat_cols).reset_index(drop=True)],
         axis=1
     )
@@ -46,7 +46,8 @@ def main():
     with engine.begin() as conn:
         conn.execute(sa.text(f"CREATE SCHEMA IF NOT EXISTS {CLEAN_SCHEMA};"))
         X.to_sql("features", conn, schema=CLEAN_SCHEMA, if_exists="replace", index=False)
-        y.to_frame("target").to_sql("labels", conn, schema=CLEAN_SCHEMA, if_exists="replace", index=False)
+        pd.DataFrame({"target": y}).to_sql("labels", conn, schema=CLEAN_SCHEMA, if_exists="replace", index=False)
+
 
     os.makedirs("artifacts", exist_ok=True)
     joblib.dump(ohe, "artifacts/ohe.joblib")
