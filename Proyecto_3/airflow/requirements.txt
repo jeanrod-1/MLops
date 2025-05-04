@@ -1,8 +1,9 @@
 # Dependencias típicas para scripts de ML
 pandas
-scikit-learn
+scikit-learn==1.2.2
 numpy
 joblib
+minio
 
 # Otras posibles dependencias usadas en tus scripts Python
 pyyaml

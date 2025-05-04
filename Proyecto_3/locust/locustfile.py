@@ -9,7 +9,6 @@ class FastApiUser(HttpUser):
         payload = {
             "num_lab_procedures": random.randint(1,132),
             "num_medications": random.randint(1,81),
-            "time_in_hospital": random.randint(1,14),
-            "race": random.choice(["Caucasian","African American","Asian","Hispanic","Other"])
+            "time_in_hospital": random.randint(1,14)
         }
         self.client.post("/predict", json=payload)

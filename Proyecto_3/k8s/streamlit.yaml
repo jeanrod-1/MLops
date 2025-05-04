@@ -22,6 +22,10 @@ metadata:
   name: streamlit
   namespace: mlops
 spec:
-  selector: { app: streamlit }
-  ports: [{ port: 80, targetPort: 8501 }]
-  type: ClusterIP
+  type: NodePort
+  selector:
+    app: streamlit
+  ports:
+    - port: 80
+      targetPort: 8501
+      nodePort: 30010  # puedes elegir un puerto entre 30000–32767

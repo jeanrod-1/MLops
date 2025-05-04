@@ -30,5 +30,8 @@ metadata:
   namespace: mlops
 spec:
   selector: { app: mlflow }
-  ports: [{ port: 5000, targetPort: 5000 }]
-  type: ClusterIP
+  type: NodePort
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30008  # puedes elegir cualquier puerto libre en el rango 30000–32767

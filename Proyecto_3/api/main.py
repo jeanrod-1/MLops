@@ -16,7 +16,7 @@ class Patient(BaseModel):
     num_lab_procedures:int
     num_medications:int
     time_in_hospital:int
-    race:str = "Caucasian"
+    # race:str = "Caucasian"
 
 @app.on_event("startup")
 def _startup():
@@ -33,6 +33,7 @@ def predict(entry:Patient):
         df = entry.model_dump()
         import pandas as pd
         X = pd.DataFrame([df])
+        print(X)
         y = model.predict(X)[0]
     return {"readmit_<30": bool(y), "model":model_uri}
 

@@ -42,8 +42,10 @@ metadata:
   name: minio
   namespace: mlops
 spec:
-  selector: { app: minio }
+  type: NodePort
   ports:
-    - { name: api,     port: 9000, targetPort: 9000 }
-    - { name: console, port: 9001, targetPort: 9001 }
-  type: ClusterIP
+    - port: 9000
+      targetPort: 9000
+      nodePort: 30001
+  selector:
+    app: minio
