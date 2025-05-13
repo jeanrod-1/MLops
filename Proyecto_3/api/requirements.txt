@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+mlflow==2.17.2
+scikit-learn==1.2.2
+joblib
+prometheus-client
+python-multipart
+minio
+boto3
+cloudpickle==2.2.1
+numpy==1.24.4
+scipy==1.10.1
+psutil==5.9.5
+pandas
+uvicorn
