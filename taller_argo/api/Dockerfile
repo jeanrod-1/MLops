@@ -1,18 +1,16 @@
-
-# Establecemos directorio de trabajo
+FROM python:3.12-slim
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiamos solo los archivos necesarios
-COPY requirements.txt .
+# Copiar archivos al contenedor
+COPY . .
 
-# Instalamos dependencias
-RUN pip install --no-cache-dir -r requirements.txt
+# Instalar dependencias
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
-# Copiamos el resto de los archivos de la API
-COPY app/ ./app/
-
-# Exponemos el puerto por defecto de Uvicorn
+# Exponer el puerto
 EXPOSE 8000
 
-# Comando de ejecución
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Comando para iniciar la aplicación FastAPI con uvicorn
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
