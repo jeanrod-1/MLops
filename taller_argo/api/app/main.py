@@ -1,5 +1,3 @@
-# api/app/main.py
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import joblib
@@ -35,6 +33,7 @@ class PatientData(BaseModel):
     change: str
     diabetesMed: str
 
+# Endpoint para hacer predicciones
 @app.post("/predict")
 def predict(data: PatientData):
     try:
@@ -51,6 +50,10 @@ def predict(data: PatientData):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# Endpoint para exponer métricas de Prometheus
 @app.get("/metrics")
 def metrics():
+    """
+    Endpoint para exponer métricas de Prometheus
+    """
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
