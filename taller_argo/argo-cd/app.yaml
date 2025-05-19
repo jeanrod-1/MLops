@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: default
+    namespace: argo
     server: 'https://kubernetes.default.svc'
   source:
     repoURL: 'https://github.com/jeanrod-1/MLops'

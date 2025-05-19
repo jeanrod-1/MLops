@@ -69,6 +69,7 @@ b. Argo CD se encargará de:
     (10.152.183.61)
     Argo: http://<CLUSTER_IP>:80 (usuario/pass por defecto: admin/admin)
     (10.152.183.127)
+    sudo microk8s kubectl -n argo get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
 9. Ver Métricas en Grafana
 
