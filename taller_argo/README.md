@@ -35,7 +35,7 @@ docker push jeanrod1/loadtester:latest
 
 5. Probar localmente con kubectl (opcional)
 
-sudo microk8s kubectl apply -k manifests/
+sudo microk8s kubectl apply -n argo -k manifests/
 
 Verifica con:
 
