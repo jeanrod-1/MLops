@@ -5,3 +5,4 @@ joblib
 prometheus_client
 pandas
 pydantic
+numpy

@@ -1,0 +1,6 @@
+resources:
+  - api-deployment.yaml
+  - script-deployment.yaml
+  - prometheus-deployment.yaml
+  - grafana-deployment.yaml
+  - grafana-config/datasources.yaml

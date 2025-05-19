@@ -1,54 +1,26 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel
-import joblib
-import pandas as pd
+import pickle
+import numpy as np
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 from fastapi.responses import Response
 
-# Inicializar la app
 app = FastAPI()
 
-# Cargar modelo
-model = joblib.load("app/model.pkl")
+with open("app/model.pkl", "rb") as f:
+    model = pickle.load(f)
 
-# Métricas Prometheus
-predict_counter = Counter("predict_requests_total", "Número total de peticiones a /predict")
+class InputData(BaseModel):
+    features: list
 
-# Clase para la entrada del modelo (ajústala con tus features reales)
-class PatientData(BaseModel):
-    race: str
-    gender: str
-    age: str
-    time_in_hospital: int
-    num_lab_procedures: int
-    num_procedures: int
-    num_medications: int
-    number_outpatient: int
-    number_emergency: int
-    number_inpatient: int
-    number_diagnoses: int
-    max_glu_serum: str
-    A1Cresult: str
-    insulin: str
-    change: str
-    diabetesMed: str
+prediction_counter = Counter("predictions_total", "Total predictions made")
 
-# Endpoint para hacer predicciones
 @app.post("/predict")
-def predict(data: PatientData):
-    try:
-        # Registrar métrica
-        predict_counter.inc()
+def predict(data: InputData):
+    prediction_counter.inc()
+    prediction = model.predict([np.array(data.features)])
+    return {"prediction": int(prediction[0])}
 
-        # Convertir entrada a DataFrame
-        input_df = pd.DataFrame([data.dict()])
-        
-        # Hacer predicción
-        prediction = model.predict(input_df)
-
-        return {"prediction": prediction[0]}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
 # Endpoint para exponer métricas de Prometheus
 @app.get("/metrics")

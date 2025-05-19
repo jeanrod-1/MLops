@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mlops-app
+  namespace: argo
+spec:
+  destination:
+    name: ''
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://github.com/jeanrod-1/MLops'
+    targetRevision: HEAD
+    path: taller_argo/manifests
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
