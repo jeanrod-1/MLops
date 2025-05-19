@@ -5,8 +5,3 @@ resources:
   - prometheus.yaml
   - grafana-deployment.yaml
   - grafana-config/datasources.yaml
-
-configMapGenerator:
-  - name: prometheus-config
-    files:
-      - prometheus.yaml
