@@ -61,12 +61,14 @@ b. Argo CD se encargará de:
 
 8. Visualizar la Arquitectura
 
-    FastAPI: http://<CLUSTER_IP>:<NODEPORT>/predict 
+    FastAPI: http://<CLUSTER_IP>:<8080>/predict 
     (10.152.183.224)
     Prometheus: http://<CLUSTER_IP>:9090
     (10.152.183.253)
     Grafana: http://<CLUSTER_IP>:3000 (usuario/pass por defecto: admin/admin)
     (10.152.183.61)
+    Argo: http://<CLUSTER_IP>:80 (usuario/pass por defecto: admin/admin)
+    (10.152.183.127)
 
 9. Ver Métricas en Grafana
 
