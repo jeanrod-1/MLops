@@ -24,11 +24,13 @@ sudo microk8s kubectl apply -n argo -f https://raw.githubusercontent.com/argopro
 3. Crear Imágenes Docker
 
 API:
+
 cd api
 docker build -t jeanrod1/fastapi-api:latest .
 docker push jeanrod1/fastapi-api:latest
 
 LoadTester:
+
 cd loadtester
 docker build -t jeanrod1/loadtester:latest .
 docker push jeanrod1/loadtester:latest
@@ -36,9 +38,6 @@ docker push jeanrod1/loadtester:latest
 5. Probar localmente con kubectl (opcional)
 
 sudo microk8s kubectl apply -n argo -k manifests/
-
-Verifica con:
-
 sudo microk8s kubectl get pods -n argo
 sudo microk8s kubectl port-forward svc/api-service 8000:80
 
@@ -47,7 +46,7 @@ sudo microk8s kubectl port-forward svc/api-service 8000:80
 7. Configurar Argo CD
 a. Crear el App en Argo CD (una vez)
 
-kubectl apply -f Niveles/4/argo-cd/app.yaml
+sudo microk8s kubectl apply -n argo -f argo-cd/app.yaml
 
 
 b. Argo CD se encargará de:
