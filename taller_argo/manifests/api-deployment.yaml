@@ -28,5 +28,5 @@ spec:
     app: api
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 80          # El puerto que expone el service (externo en cluster)
+      targetPort: 8000  # Puerto interno en el pod (donde escucha tu app)

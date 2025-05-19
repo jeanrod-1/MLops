@@ -20,6 +20,8 @@ sudo microk8s kubectl create namespace argo
 
 sudo microk8s kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+(sudo microk8s kubectl apply -n argo -f install.yaml)
+
 
 3. Crear Imágenes Docker
 
@@ -39,7 +41,7 @@ docker push jeanrod1/loadtester:latest
 
 sudo microk8s kubectl apply -n argo -k manifests/
 sudo microk8s kubectl get pods -n argo
-sudo microk8s kubectl port-forward svc/api-service 8000:80
+sudo microk8s kubectl port-forward svc/api-service 8000:80 -n argo
 
 
 
@@ -59,11 +61,12 @@ b. Argo CD se encargará de:
 
 8. Visualizar la Arquitectura
 
-    FastAPI: http://<CLUSTER_IP>:<NODEPORT>/predict o via port-forward
-
+    FastAPI: http://<CLUSTER_IP>:<NODEPORT>/predict 
+    (10.152.183.224)
     Prometheus: http://<CLUSTER_IP>:9090
-
+    (10.152.183.253)
     Grafana: http://<CLUSTER_IP>:3000 (usuario/pass por defecto: admin/admin)
+    (10.152.183.61)
 
 9. Ver Métricas en Grafana
 
