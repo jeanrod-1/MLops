@@ -1,90 +1,146 @@
-✅ PRERREQUISITOS
+# Despliegue con FastAPI + Kubernetes + ArgoCD + CI/CD
 
-Asegúrate de tener:
+En este taller desplegamos una API hecha en FastAPI dentro de un clúster de Kubernetes, usando ArgoCD para GitOps y GitHub Actions para CI/CD. También incluye monitoreo con Prometheus y Grafana.
 
-    ✅ Cuenta de GitHub y un repositorio creado
+---
 
-    ✅ Docker instalado y configurado (con acceso a Docker Hub o similar)
+## 📦 1. Construcción y Publicación de Imágenes Docker
 
-    ✅ Clúster de Kubernetes activo (puede ser minikube, kind o cloud como GKE/EKS/AKS)
+### ✅ API (FastAPI)
 
-    ✅ Argo CD instalado y configurado en el clúster
-
-    ✅ kubectl, kustomize, argocd CLI y helm instalados localmente
-
-    ✅ Repositorio Git enlazado a Argo CD como source
-
-🚀 PASO A PASO
-
-1. sudo microk8s kubectl create namespace argo
-
-2. sudo microk8s kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-(sudo microk8s kubectl apply -n argo -f install.yaml)
-
-
-3. Crear Imágenes Docker
-
-API:
-
+```bash
 cd api
 docker build -t jeanrod1/fastapi-api:latest .
 docker push jeanrod1/fastapi-api:latest
+```
 
-LoadTester:
+### ✅ Load Tester
 
+```bash
 cd loadtester
 docker build -t jeanrod1/loadtester:latest .
 docker push jeanrod1/loadtester:latest
+```
 
-5. Probar localmente con kubectl (opcional)
+---
 
+## 📂 2. Crear Namespace en Kubernetes
+
+```bash
+sudo microk8s kubectl create namespace argo
+```
+
+---
+
+## 📥 3. Instalar ArgoCD en el Cluster
+
+```bash
+sudo microk8s kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+(O con archivo local)
+
+```bash
+sudo microk8s kubectl apply -n argo -f install.yaml
+```
+
+---
+
+## 📄 4. Aplicar Manifiestos del Proyecto
+
+```bash
 sudo microk8s kubectl apply -n argo -k manifests/
 sudo microk8s kubectl get pods -n argo
-sudo microk8s kubectl port-forward svc/api-service 8000:80 -n argo
+```
 
+---
 
+## ⚙️ 5. Configurar Aplicación en ArgoCD
 
-7. Configurar Argo CD
-a. Crear el App en Argo CD (una vez)
+### a. Crear la aplicación (una sola vez)
 
+```bash
 sudo microk8s kubectl apply -n argo -f argo-cd/app.yaml
+```
 
+### b. ¿Qué hace ArgoCD?
 
-b. Argo CD se encargará de:
+- Detecta cambios en el repositorio Git
+- Aplica automáticamente los manifiestos
+- Mantiene el estado deseado en Kubernetes
 
-    Detectar cambios en Git
+---
 
-    Aplicar automáticamente los manifiestos
+## 🌐 6. Acceder a los Servicios
 
-    Mantener el estado deseado en K8s
+### a. Redireccionar puertos con port-forward
 
-8. Visualizar la Arquitectura
+```bash
+sudo microk8s kubectl port-forward svc/api-service 8000:80 -n argo
+```
 
-    FastAPI: http://<CLUSTER_IP>:<8080>/predict 
-    (10.152.183.224)
-    Prometheus: http://<CLUSTER_IP>:9090
-    (10.152.183.253)
-    Grafana: http://<CLUSTER_IP>:3000 (usuario/pass por defecto: admin/admin)
-    (10.152.183.61)
-    Argo: http://<CLUSTER_IP>:80 (usuario/pass por defecto: admin/admin)
-    (10.152.183.127)
-    sudo microk8s kubectl -n argo get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+### b. Direcciones de los Servicios
 
-9. Ver Métricas en Grafana
+| Servicio    | URL de acceso                       | IP de ejemplo        |
+|-------------|--------------------------------------|-----------------------|
+| **FastAPI** | `http://<CLUSTER_IP>:8080/predict`  | `10.152.183.224`      |
+| **Prometheus** | `http://<CLUSTER_IP>:9090`       | `10.152.183.253`      |
+| **Grafana**    | `http://<CLUSTER_IP>:3000`       | `10.152.183.61`       |
+| **ArgoCD**     | `http://<CLUSTER_IP>:80`         | `10.152.183.127`      |
 
-    Entrar a Grafana
+### c. Obtener contraseña de ArgoCD
 
-    Data Source: Prometheus (ya configurado)
+```bash
+sudo microk8s kubectl -n argo get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+```
 
-    Crear dashboards con métricas como:
+Credenciales por defecto:
+- Usuario: `admin`
+- Contraseña: la que obtuviste con el comando anterior
 
-        http_requests_total
+### d. Servicios desplegados
 
-        response_latency_seconds
+#### FastAPI
+![api](images/fastapi.jpeg)
 
-🧠 BONUS: Flujo CI/CD Completo
+#### Prometheus
+![prometheus](images/prometheus.jpeg)
 
+#### Grafana
+![grafana](images/grafana.jpeg)
+
+#### ArgoCD
+![argo](images/argo.jpeg)
+
+---
+
+## 📊 7. Visualizar Métricas en Grafana
+
+### a. Entrar a Grafana
+
+- URL: `http://<CLUSTER_IP>:3000`
+- Usuario/contraseña por defecto: `admin / admin`
+
+### b. Configurar Prometheus como data source
+
+1. Añadir Prometheus como fuente de datos:
+   ![grafana_add_prometheus](images/grafana_add_prometheus.jpeg)
+
+2. Crear dashboards con métricas como:
+   - `http_requests_total`
+   - `response_latency_seconds`
+
+   ![grafana_dashboard](images/grafana_dashboard.jpeg)
+
+---
+
+## 🤖 8. CI/CD Automatizado con GitHub Actions
+
+Cada vez que haces `git push`, se ejecuta un flujo automático de despliegue continuo.
+
+### Diagrama del flujo CI/CD
+
+```mermaid
 graph LR
 A[Commit en GitHub] --> B[GitHub Actions]
 B --> C[Entrena modelo y sube imágenes]
@@ -93,3 +149,18 @@ D --> E[Push a GitHub]
 E --> F[Argo CD detecta cambio]
 F --> G[Aplica en Kubernetes]
 G --> H[API desplegada con métricas]
+```
+
+![Githubactions](images/github_actions.jpeg)
+
+---
+
+## 🔁 9. GitOps: Sincronización Automática con ArgoCD
+
+ArgoCD monitorea la carpeta `taller_argo/manifests` de tu repositorio y asegura que el estado del clúster esté **siempre sincronizado** con Git:
+
+- Si alguien cambia el clúster manualmente, Argo lo **corrige automáticamente**.
+- Si borras algo del repositorio, **se borra del clúster**.
+- Si haces un cambio en Git, **se aplica automáticamente**.
+
+---
