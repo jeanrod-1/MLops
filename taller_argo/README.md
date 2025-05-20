@@ -16,9 +16,9 @@ Asegúrate de tener:
 
 🚀 PASO A PASO
 
-sudo microk8s kubectl create namespace argo
+1. sudo microk8s kubectl create namespace argo
 
-sudo microk8s kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+2. sudo microk8s kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 (sudo microk8s kubectl apply -n argo -f install.yaml)
 
