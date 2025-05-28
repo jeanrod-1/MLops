@@ -1,0 +1,9 @@
+name: Build MLflow
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build MLflow Docker image
+      run: docker build -t myuser/mlflow:latest ./mlflow/docker

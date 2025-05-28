@@ -1,0 +1,9 @@
+name: Build Airflow
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Airflow Docker image
+      run: docker build -t myuser/airflow:latest ./airflow/docker

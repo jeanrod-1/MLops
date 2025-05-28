@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  fastapi:
+    build: ./api
+    ports:
+      - "8000:8000"
+  streamlit:
+    build: ./streamlit_ui
+    ports:
+      - "8501:8501"
+  mlflow:
+    build: ./mlflow/docker
+    ports:
+      - "5000:5000"
+  airflow:
+    build: ./airflow/docker
+    ports:
+      - "8080:8080"
