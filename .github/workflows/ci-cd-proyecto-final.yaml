@@ -68,6 +68,7 @@ jobs:
           git add Proyecto_Final/manifests/api-deployment.yaml
           git add Proyecto_Final/manifests/streamlit-deployment.yaml
           git commit -m "Update image to version ${VERSION}"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
