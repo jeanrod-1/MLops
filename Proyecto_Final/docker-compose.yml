@@ -1,18 +1,64 @@
-version: '3.8'
+version: "3.9"
+
 services:
+  postgres:
+    image: postgres:14
+    env_file: .env
+    volumes: [ "./postgres-data:/var/lib/postgresql/data" ]
+    ports: [ "5432:5432" ]
+
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    env_file: .env
+    volumes: [ "./minio-data:/data" ]
+    ports: [ "9000:9000", "9001:9001" ]
+
+  mlflow:
+    image: python:3.10-slim
+    env_file: .env
+    volumes:
+      - "./mlruns:/mlruns"
+    command: >
+      sh -c "
+      pip install mlflow boto3 psycopg2-binary &&
+      mlflow server
+        --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+        --default-artifact-root s3://${S3_BUCKET}/
+        --host 0.0.0.0 --port 5000"
+    ports: [ "5000:5000" ]
+    depends_on: [ postgres, minio ]
+
+  airflow:
+    build: ./airflow
+    env_file: .env
+    ports: [ "8080:8080" ]
+    volumes:
+      - "./airflow/dags:/opt/airflow/dags"
+      - "./src:/opt/airflow/src"
+    depends_on: [ postgres, mlflow ]
+
   fastapi:
     build: ./api
-    ports:
-      - "8000:8000"
+    env_file: .env
+    ports: [ "8000:8000" ]
+    depends_on: [ mlflow ]
+
   streamlit:
-    build: ./streamlit_ui
-    ports:
-      - "8501:8501"
-  mlflow:
-    build: ./mlflow/docker
-    ports:
-      - "5000:5000"
-  airflow:
-    build: ./airflow/docker
-    ports:
-      - "8080:8080"
+    build: ./ui
+    env_file: .env
+    ports: [ "8501:8501" ]
+    depends_on: [ fastapi ]
+
+  prometheus:
+    image: prom/prometheus
+    volumes: [ "./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml" ]
+    ports: [ "9090:9090" ]
+    depends_on: [ fastapi ]
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - "./monitoring/grafana-provisioning:/etc/grafana/provisioning"
+    ports: [ "3000:3000" ]
+    depends_on: [ prometheus ]

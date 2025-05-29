@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mlops-app
+  namespace: mlops
+spec:
+  destination:
+    name: ''
+    namespace: mlops
+    server: 'https://kubernetes.default.svc'
+  source:
+    repoURL: 'https://github.com/jeanrod-1/MLops'
+    targetRevision: HEAD
+    path: Proyecto_Final/manifests
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

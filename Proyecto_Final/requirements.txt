@@ -1,8 +1,8 @@
 pandas
-scikit-learn
+numpy
+scikit-learn==1.2.2
 mlflow
-fastapi
-uvicorn
-streamlit
-seaborn
-matplotlib
+boto3
+minio
+shap
+psycopg2-binary
