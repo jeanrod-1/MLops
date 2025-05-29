@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: jeanrod1/fastapi-api:__VERSION__
+        image: jeanrod1/fastapi-api:jeanrod1/fastapi-api:20250529-4
         # image: jeanrod1/fastapi-api:latest
         imagePullPolicy: Always  # ← obliga a que siempre busque la última imagen
         ports:
