@@ -54,11 +54,11 @@ jobs:
 
       - name: Replace image version in API manifest
         run: |
-          sed "s|__VERSION__|jeanrod1/fastapi-api:${VERSION}|g" Proyecto_Final/manifests/api-deployment.yaml
+          sed -i "s|__VERSION__|jeanrod1/fastapi-api:${VERSION}|g" Proyecto_Final/manifests/api-deployment.yaml
 
       - name: Replace image version in Streamlit manifest
         run: |
-          sed "s|__VERSION__|jeanrod1/streamlit:${VERSION}|g" Proyecto_Final/manifests/streamlit-deployment.yaml
+          sed -i "s|__VERSION__|jeanrod1/streamlit:${VERSION}|g" Proyecto_Final/manifests/streamlit-deployment.yaml
 
       - name: Commit updated manifest
         run: |
