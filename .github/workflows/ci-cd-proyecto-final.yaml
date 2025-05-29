@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'Proyecto_Final/**'
+      - '.github/workflows/ci-cd-proyecto-final.yaml'
 
 env:
   DOCKERHUB_USER: ${{ secrets.DOCKER_USERNAME }}
