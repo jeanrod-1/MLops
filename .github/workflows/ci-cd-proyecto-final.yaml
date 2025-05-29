@@ -35,11 +35,11 @@ jobs:
 
       - name: Build and tag API image
         run: |
-          docker build -t $DOCKERHUB_USER/fastapi-api:${VERSION} Proyecto_Final/api
+          docker build -t $DOCKERHUB_USER/fastapi-api:${VERSION} -f Proyecto_Final/api/Dockerfile Proyecto_Final
 
       - name: Build and tag Streamlit image
         run: |
-          docker build -t $DOCKERHUB_USER/streamlit:${VERSION} Proyecto_Final/ui
+          docker build -t $DOCKERHUB_USER/streamlit:${VERSION} -f Proyecto_Final/ui/Dockerfile Proyecto_Final
 
       - name: Push API images
         run: |
