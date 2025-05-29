@@ -11,7 +11,8 @@ spec:
     spec:
       containers:
         - name: streamlit
-          image: jeanrod1/streamlit:jeanrod1/streamlit:20250529-4
+          image: __STREAMLIT_IMAGE__
+          # image: jeanrod1/streamlit:jeanrod1/streamlit:20250529-4
           # image: jeanrod1/streamlit:latest
           env:
             - { name: API_URL, value: "http://api-service.mlops.svc.cluster.local" }
