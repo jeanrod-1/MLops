@@ -1,0 +1,73 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Proyecto_Final/**'
+
+env:
+  DOCKERHUB_USER: ${{ secrets.DOCKER_USERNAME }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Set image version
+        id: version
+        run: echo "VERSION=$(date +%Y%m%d)-${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and tag API image
+        run: |
+          docker build -t $DOCKERHUB_USER/fastapi-api:${VERSION} Proyecto_Final/api
+
+      - name: Build and tag Streamlit image
+        run: |
+          docker build -t $DOCKERHUB_USER/streamlit:${VERSION} Proyecto_Final/ui
+
+      - name: Push API images
+        run: |
+          docker push $DOCKERHUB_USER/fastapi-api:${VERSION}
+
+      - name: Push Streamlit images
+        run: |
+          docker push $DOCKERHUB_USER/streamlit:${VERSION}
+
+      - name: Generate image version
+        run: echo "VERSION=$(date +%Y%m%d)-${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Replace image version in API manifest
+        run: |
+          sed "s|__VERSION__|jeanrod1/fastapi-api:${VERSION}|g" Proyecto_Final/manifests/api-deployment.yaml
+
+      - name: Replace image version in Streamlit manifest
+        run: |
+          sed "s|__VERSION__|jeanrod1/streamlit:${VERSION}|g" Proyecto_Final/manifests/streamlit-deployment.yaml
+
+      - name: Commit updated manifest
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add Proyecto_Final/manifests/api-deployment.yaml
+          git add Proyecto_Final/manifests/streamlit-deployment.yaml
+          git commit -m "Update image to version ${VERSION}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  

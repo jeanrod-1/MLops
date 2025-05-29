@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'taller_argo/**'
 
 jobs:
   build-and-push:
