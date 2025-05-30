@@ -10,6 +10,7 @@ on:
 
 env:
   DOCKERHUB_USER: ${{ secrets.DOCKER_USERNAME }}
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   build-and-push:
@@ -24,10 +25,6 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Set image version
-        id: version
-        run: echo "VERSION=$(date +%Y%m%d)-${{ github.run_number }}" >> $GITHUB_ENV
-
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
@@ -36,22 +33,39 @@ jobs:
 
       - name: Build and tag API image
         run: |
-          docker build -t $DOCKERHUB_USER/fastapi-api:latest -f Proyecto_Final/api/Dockerfile Proyecto_Final
+          docker build -t $DOCKERHUB_USER/fastapi-api:${IMAGE_TAG::7} -f Proyecto_Final/api/Dockerfile Proyecto_Final
 
       - name: Build and tag Streamlit image
         run: |
-          docker build -t $DOCKERHUB_USER/streamlit:latest -f Proyecto_Final/ui/Dockerfile Proyecto_Final
+          docker build -t $DOCKERHUB_USER/streamlit:${IMAGE_TAG::7} -f Proyecto_Final/ui/Dockerfile Proyecto_Final
 
       - name: Push API images
         run: |
-          docker push $DOCKERHUB_USER/fastapi-api:latest
+          docker push $DOCKERHUB_USER/fastapi-api:${IMAGE_TAG::7}
 
       - name: Push Streamlit images
         run: |
-          docker push $DOCKERHUB_USER/streamlit:latest
+          docker push $DOCKERHUB_USER/streamlit:${IMAGE_TAG::7}
 
-      - name: Generate image version
-        run: echo "VERSION=$(date +%Y%m%d)-${{ github.run_number }}" >> $GITHUB_ENV
+      - name: Update Kubernetes manifests with new image tag
+        run: |
+          # Reemplazar cualquier tag viejo en los manifiestos por el nuevo tag de imagen
+          find Proyecto_Final/manifests -type f -name '*.yaml' -exec sed -i -E "s|(image: $DOCKERHUB_USER/fastapi-api):[^[:space:]]+|\1:${IMAGE_TAG::7}|g" {} +
+          find Proyecto_Final/manifests -type f -name '*.yaml' -exec sed -i -E "s|(image: $DOCKERHUB_USER/streamlit):[^[:space:]]+|\1:${IMAGE_TAG::7}|g" {} +
+
+      - name: Commit and push manifest changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add Proyecto_Final/manifests
+          # Sólo commitear si hay cambios para evitar errores
+          if ! git diff --cached --quiet; then
+            git commit -m "Update image tags to ${IMAGE_TAG::7}"
+            git push origin main
+          else
+            echo "No manifest changes detected, skipping commit."
+          fi
+
 
       # - name: Replace image version in API manifest
       #   run: |

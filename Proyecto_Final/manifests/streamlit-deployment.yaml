@@ -11,10 +11,9 @@ spec:
     spec:
       containers:
         - name: streamlit
-          # image: jeanrod1/streamlit:20250529-5
-          # image: jeanrod1/streamlit:jeanrod1/streamlit:20250529-4
           image: jeanrod1/streamlit:latest
           imagePullPolicy: Always
+          command: ["streamlit", "run", "app.py", "--server.port=8501", "--server.enableCORS=false"]
           env:
             - { name: API_URL, value: "http://api-service.mlops.svc.cluster.local" }
           ports: [{ containerPort: 8501 }]
