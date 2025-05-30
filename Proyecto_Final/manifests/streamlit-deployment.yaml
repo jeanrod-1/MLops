@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: streamlit
-          image: jeanrod1/streamlit:latest
+          image: jeanrod1/streamlit:f4e4609
           imagePullPolicy: Always
           command: ["streamlit", "run", "app.py", "--server.port=8501", "--server.enableCORS=false"]
           env:
