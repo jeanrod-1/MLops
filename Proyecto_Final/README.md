@@ -77,8 +77,8 @@ sudo microk8s kubectl create namespace mlops
 
 sudo microk8s kubectl apply -n mlops -f install.yaml
 sudo microk8s kubectl apply -n mlops -k manifests/
-sudo microk8s kubectl get pods -n mlops
 sudo microk8s kubectl apply -n mlops -f argo-cd/app.yaml
+sudo microk8s kubectl get pods -n mlops
 
 ---
 

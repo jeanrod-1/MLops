@@ -36,40 +36,40 @@ jobs:
 
       - name: Build and tag API image
         run: |
-          docker build -t $DOCKERHUB_USER/fastapi-api:${VERSION} -f Proyecto_Final/api/Dockerfile Proyecto_Final
+          docker build -t $DOCKERHUB_USER/fastapi-api:latest -f Proyecto_Final/api/Dockerfile Proyecto_Final
 
       - name: Build and tag Streamlit image
         run: |
-          docker build -t $DOCKERHUB_USER/streamlit:${VERSION} -f Proyecto_Final/ui/Dockerfile Proyecto_Final
+          docker build -t $DOCKERHUB_USER/streamlit:latest -f Proyecto_Final/ui/Dockerfile Proyecto_Final
 
       - name: Push API images
         run: |
-          docker push $DOCKERHUB_USER/fastapi-api:${VERSION}
+          docker push $DOCKERHUB_USER/fastapi-api:latest
 
       - name: Push Streamlit images
         run: |
-          docker push $DOCKERHUB_USER/streamlit:${VERSION}
+          docker push $DOCKERHUB_USER/streamlit:latest
 
       - name: Generate image version
         run: echo "VERSION=$(date +%Y%m%d)-${{ github.run_number }}" >> $GITHUB_ENV
 
-      - name: Replace image version in API manifest
-        run: |
-          sed -i "s|__FASTAPI_IMAGE__|${DOCKERHUB_USER}/fastapi-api:${VERSION}|g" Proyecto_Final/manifests/api-deployment.yaml
+      # - name: Replace image version in API manifest
+      #   run: |
+      #     sed -i "s|__FASTAPI_IMAGE__|${DOCKERHUB_USER}/fastapi-api:${VERSION}|g" Proyecto_Final/manifests/api-deployment.yaml
 
-      - name: Replace image version in Streamlit manifest
-        run: |
-          sed -i "s|__STREAMLIT_IMAGE__|${DOCKERHUB_USER}/streamlit:${VERSION}|g" Proyecto_Final/manifests/streamlit-deployment.yaml
+      # - name: Replace image version in Streamlit manifest
+      #   run: |
+      #     sed -i "s|__STREAMLIT_IMAGE__|${DOCKERHUB_USER}/streamlit:${VERSION}|g" Proyecto_Final/manifests/streamlit-deployment.yaml
 
-      - name: Commit updated manifest
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git add Proyecto_Final/manifests/api-deployment.yaml
-          git add Proyecto_Final/manifests/streamlit-deployment.yaml
-          git commit -m "Update image to version ${VERSION}"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Commit updated manifest
+      #   run: |
+      #     git config --global user.name 'github-actions'
+      #     git config --global user.email 'github-actions@github.com'
+      #     git add Proyecto_Final/manifests/api-deployment.yaml
+      #     git add Proyecto_Final/manifests/streamlit-deployment.yaml
+      #     git commit -m "Update image to version ${VERSION}"
+      #     git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+      #     git push
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
