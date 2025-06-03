@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: api
-        # image: jeanrod1/fastapi-api:327ea72
-        # image: jeanrod1/fastapi-api:327ea72
-        image: jeanrod1/fastapi-api:327ea72
+        # image: jeanrod1/fastapi-api:00c8061
+        # image: jeanrod1/fastapi-api:00c8061
+        image: jeanrod1/fastapi-api:00c8061
         imagePullPolicy: Always  # ← obliga a que siempre busque la última imagen
         ports:
         # - containerPort: 80
