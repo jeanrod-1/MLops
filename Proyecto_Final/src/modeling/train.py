@@ -33,10 +33,10 @@ def setup_experiment(experiment_name: str, artifact_location: str = "s3://mlflow
         experiment_id = client.create_experiment(name=experiment_name, artifact_location=artifact_location)
     else:
         if experiment.lifecycle_stage == "deleted":
-            print(f"⚠️  Restaurando experimento eliminado: {experiment_name}")
+            print(f"Restaurando experimento eliminado: {experiment_name}")
             client.restore_experiment(experiment.experiment_id)
         experiment_id = experiment.experiment_id
-        print(f"✅ Usando experimento existente: {experiment_name} (ID: {experiment_id})")
+        print(f"Usando experimento existente: {experiment_name} (ID: {experiment_id})")
 
     mlflow.set_experiment(experiment_name)
     return experiment_id
