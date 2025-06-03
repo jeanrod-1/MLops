@@ -185,5 +185,5 @@ G --> H[Servicios Desplegados con Métricas Activas]
 ```
 
 ![GitHub Actions](images/github-actions.jpeg)
-
+###
 ---
