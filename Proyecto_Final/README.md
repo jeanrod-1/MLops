@@ -183,7 +183,6 @@ E --> F[ArgoCD Detecta Cambio]
 F --> G[Aplica Cambios en Kubernetes]
 G --> H[Servicios Desplegados con Métricas Activas]
 ```
-
 ![GitHub Actions](images/github-actions.jpeg)
 ###
 ---
